@@ -7,6 +7,8 @@ $COMMIT_MESSAGE = Read-Host "Please provide commit message"
 
 & .\latest
 
+& go mod vendor
+
 # Get previous version string
 $LATEST_COMMIT_HASH = git rev-list --tags --max-count=1
 $VERSION = git describe --tags "$($LATEST_COMMIT_HASH)"
