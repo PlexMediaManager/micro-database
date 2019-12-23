@@ -9,7 +9,7 @@ import (
 )
 
 const (
-
+    userServiceName                 =   "micro.database"
 )
 
 // Get service name
