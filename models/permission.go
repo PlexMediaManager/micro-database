@@ -44,23 +44,19 @@ const (
 
 // Get list of updated fields
 func (permission *Permission) UpdatedFields(updateID bool, updatedFields ...string) map[string]interface{} {
-    fieldValueMap := make(map[string]interface{}, 0)
+    fieldValueMap := make(map[string]interface{})
     for _, fieldName := range updatedFields {
         switch fieldName {
             case KeyPermissionID:
                 if updateID {
                     fieldValueMap[fieldName] = permission.ID
                 }
-                break
             case KeyPermissionName:
                 fieldValueMap[fieldName] = permission.Name
-                break
             case KeyPermissionCreatedAt:
                 fieldValueMap[fieldName] = permission.CreatedAt
-                break
             case KeyPermissionUpdatedAt:
                 fieldValueMap[fieldName] = permission.UpdatedAt
-                break
         }
     }
     return fieldValueMap

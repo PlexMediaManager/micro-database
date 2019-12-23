@@ -54,33 +54,27 @@ const (
 
 // Get list of updated fields
 func (user *User) UpdatedFields(updateID bool, updatedFields ...string) map[string]interface{} {
-    fieldValueMap := make(map[string]interface{}, 0)
+    fieldValueMap := make(map[string]interface{})
     for _, fieldName := range updatedFields {
         switch fieldName {
         case KeyUserID:
             if updateID {
                 fieldValueMap[fieldName] = user.ID
             }
-            break
         case KeyUserUsername:
             fieldValueMap[fieldName] = user.Username
-            break
         case KeyUserEmail:
             fieldValueMap[fieldName] = user.Email
-            break
         case KeyUserEmailVerifiedAt:
             fieldValueMap[fieldName] = user.EmailVerifiedAt
         case KeyUserPassword:
             fieldValueMap[fieldName] = user.Password
-            break
         case KeyUserRememberToken:
             fieldValueMap[fieldName] = user.RememberToken
         case KeyUserCreatedAt:
             fieldValueMap[fieldName] = user.CreatedAt
-            break
         case KeyUserUpdatedAt:
             fieldValueMap[fieldName] = user.UpdatedAt
-            break
         //case KeyUserDeletedAt:
         //    fieldValueMap[fieldName] = user.DeletedAt
         //    break
