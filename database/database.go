@@ -5,6 +5,7 @@ import (
     "github.com/jinzhu/gorm"
     _ "github.com/jinzhu/gorm/dialects/mysql"
     "github.com/plexmediamanager/micro-database/errors"
+    "github.com/plexmediamanager/micro-database/models"
     "github.com/plexmediamanager/service/helpers"
 )
 
@@ -65,5 +66,8 @@ func (client *DatabaseClient) buildDatabaseDSN() string {
 
 // Perform automatic migration
 func (client *DatabaseClient) autoMigrate() {
-    database.AutoMigrate()
+    database.AutoMigrate(
+        &models.Permission{},
+        &models.User{},
+    )
 }
