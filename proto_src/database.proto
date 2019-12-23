@@ -1,0 +1,24 @@
+syntax = "proto3";
+package proto;
+
+message DatabaseEmpty {}
+
+message DatabaseResponse {
+    bytes               result      =   1;
+}
+
+message DatabaseID {
+    uint64              value       =   1;
+}
+
+message DatabaseIDs {
+    repeated uint64     values      =   1;
+}
+
+message DatabaseString {
+    string              value       =   1;
+}
+
+message DatabaseStrings {
+    repeated string     values      =   1;
+}
