@@ -49,7 +49,7 @@ const (
     KeyUserRememberToken            =   "remember_token"
     KeyUserCreatedAt                =   "created_at"
     KeyUserUpdatedAt                =   "updated_at"
-    KeyUserDeletedAt                =   "deleted_at"
+    //KeyUserDeletedAt                =   "deleted_at"
 )
 
 // Get list of updated fields
@@ -81,9 +81,9 @@ func (user *User) UpdatedFields(updateID bool, updatedFields ...string) map[stri
         case KeyUserUpdatedAt:
             fieldValueMap[fieldName] = user.UpdatedAt
             break
-        case KeyUserDeletedAt:
-            fieldValueMap[fieldName] = user.DeletedAt
-            break
+        //case KeyUserDeletedAt:
+        //    fieldValueMap[fieldName] = user.DeletedAt
+        //    break
         }
     }
     return fieldValueMap

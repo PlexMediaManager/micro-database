@@ -1,0 +1,10 @@
+syntax = "proto3";
+import "database.proto";
+package proto;
+
+service PermissionService {
+    rpc FindOneByID(DatabaseID) returns (DatabaseResponse) {}
+    rpc FindManyByID(DatabaseIDs) returns (DatabaseResponse) {}
+
+    rpc FindOneByName(DatabaseString) returns (DatabaseResponse) {}
+}

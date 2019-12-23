@@ -5,6 +5,10 @@ import "time"
 type Timestamps struct {
     CreatedAt           time.Time
     UpdatedAt           time.Time
+}
+
+type SoftDeleteTimestamps struct {
+    Timestamps
     DeletedAt           *time.Time           `gorm:"default:null"`
 }
 

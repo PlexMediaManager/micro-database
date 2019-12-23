@@ -9,6 +9,7 @@ import (
 )
 
 const (
+    permissionServiceName           =   "micro.database"
     userServiceName                 =   "micro.database"
 )
 

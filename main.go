@@ -49,4 +49,8 @@ func registerResolvers(application *service.Application) {
     if err := proto.RegisterUserServiceHandler(server, new(resolver.UserService)); err != nil {
         log.Panic(err)
     }
+
+    if err := proto.RegisterPermissionServiceHandler(server, new(resolver.PermissionService)); err != nil {
+        log.Panic(err)
+    }
 }
