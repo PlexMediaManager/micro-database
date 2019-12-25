@@ -1,0 +1,24 @@
+syntax = "proto3";
+import "database.proto";
+package proto;
+
+service GenreService {
+    rpc Create(Genre) returns (DatabaseResponse) {}
+    rpc Update(Genre) returns (DatabaseResponse) {}
+    rpc SoftDelete(Genre) returns (DatabaseResponse) {}
+    rpc ForceDelete(Genre) returns (DatabaseResponse) {}
+
+    rpc FindAll(DatabaseEmpty) returns (DatabaseResponse) {}
+    rpc FindOneByID(DatabaseID) returns (DatabaseResponse) {}
+    rpc FindManyByID(DatabaseIDs) returns (DatabaseResponse) {}
+    rpc FindOneByName(DatabaseString) returns (DatabaseResponse) {}
+    rpc FindManyByName(DatabaseStrings) returns (DatabaseResponse) {}
+}
+
+message Genre {
+    uint64                  id                          =   1;
+    string                  name                        =   2;
+    int64                   created_at                  =   3;
+    int64                   updated_at                  =   4;
+    repeated string         updated_fields              =   5;
+}

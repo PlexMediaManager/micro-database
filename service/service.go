@@ -9,6 +9,7 @@ import (
 )
 
 const (
+    genreServiceName                =   "micro.database"
     movieServiceName                =   "micro.database"
     permissionServiceName           =   "micro.database"
     userServiceName                 =   "micro.database"
