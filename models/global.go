@@ -3,13 +3,13 @@ package models
 import "time"
 
 type Timestamps struct {
-    CreatedAt           time.Time
-    UpdatedAt           time.Time
+    CreatedAt           time.Time           `json:"created_at"`
+    UpdatedAt           time.Time           `json:"updated_at"`
 }
 
 type SoftDeleteTimestamps struct {
     Timestamps
-    DeletedAt           *time.Time           `gorm:"default:null"`
+    DeletedAt           *time.Time           `json:"deleted_at",gorm:"default:null"`
 }
 
 func (timestamp *Timestamps) BeforeSave() error {
