@@ -15,7 +15,7 @@ type Movie struct {
     Overview                    string              `json:"overview" sql:"type:longtext"`
     Tagline                     string              `json:"tagline" gorm:"size:255"`
     Genres                      json.RawMessage     `json:"genres" gorm:"type:json" sql:"type:longtext"`
-    Homepage                    string              `json:"homepage"gorm:"size:255"`
+    Homepage                    string              `json:"homepage" gorm:"size:255"`
     Runtime                     uint64              `json:"runtime" gorm:"size:10"`
     Status                      uint64              `json:"status" gorm:"size:10"`
     Adult                       bool                `json:"adult" gorm:"default:false"`
