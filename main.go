@@ -50,6 +50,10 @@ func registerResolvers(application *service.Application) {
         log.Panic(err)
     }
 
+    if err := proto.RegisterLanguageServiceHandler(server, new(resolver.LanguageService)); err != nil {
+        log.Panic(err)
+    }
+
     if err := proto.RegisterMovieServiceHandler(server, new(resolver.MovieService)); err != nil {
         log.Panic(err)
     }

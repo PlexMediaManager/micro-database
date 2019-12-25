@@ -67,6 +67,9 @@ func (client *DatabaseClient) buildDatabaseDSN() string {
 // Perform automatic migration
 func (client *DatabaseClient) autoMigrate() {
     database.AutoMigrate(
+        &models.Genre{},
+        &models.Language{},
+        &models.Movie{},
         &models.Permission{},
         &models.User{},
     )

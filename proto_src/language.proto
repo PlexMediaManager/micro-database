@@ -1,0 +1,24 @@
+syntax = "proto3";
+import "database.proto";
+package proto;
+
+service LanguageService {
+    rpc Create(Language) returns (DatabaseResponse) {}
+    rpc Update(Language) returns (DatabaseResponse) {}
+    rpc SoftDelete(Language) returns (DatabaseResponse) {}
+    rpc ForceDelete(Language) returns (DatabaseResponse) {}
+
+    rpc FindAll(DatabaseEmpty) returns (DatabaseResponse) {}
+    rpc FindOneByISO(DatabaseString) returns (DatabaseResponse) {}
+    rpc FindManyByISO(DatabaseStrings) returns (DatabaseResponse) {}
+}
+
+message Language {
+    uint64                  id                          =   1;
+    string                  iso                         =   2;
+    string                  english_name                =   3;
+    string                  name                        =   4;
+    int64                   created_at                  =   5;
+    int64                   updated_at                  =   6;
+    repeated string         updated_fields              =   7;
+}
