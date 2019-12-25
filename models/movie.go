@@ -6,30 +6,30 @@ import (
 )
 
 type Movie struct {
-    ID                          uint64              `json:"id",gorm:"primary_key"`
-    Title                       string              `json:"title",gorm:"size:255;not null"`
-    OriginalTitle               string              `json:"original_title",gorm:"size:255;not null"`
-    LocalTitle                  string              `json:"local_title",gorm:"size:255"`
-    OriginalLanguage            string              `json:"original_language",gorm:"size:255"`
-    Languages                   json.RawMessage     `json:"languages",gorm:"type:json",sql:"type:longtext"`
-    Overview                    string              `json:"overview",sql:"type:longtext"`
-    Tagline                     string              `json:"tagline",gorm:"size:255"`
-    Genres                      json.RawMessage     `json:"genres",gorm:"type:json",sql:"type:longtext"`
+    ID                          uint64              `json:"id" gorm:"primary_key"`
+    Title                       string              `json:"title" gorm:"size:255;not null"`
+    OriginalTitle               string              `json:"original_title" gorm:"size:255;not null"`
+    LocalTitle                  string              `json:"local_title" gorm:"size:255"`
+    OriginalLanguage            string              `json:"original_language" gorm:"size:255"`
+    Languages                   json.RawMessage     `json:"languages" gorm:"type:json" sql:"type:longtext"`
+    Overview                    string              `json:"overview" sql:"type:longtext"`
+    Tagline                     string              `json:"tagline" gorm:"size:255"`
+    Genres                      json.RawMessage     `json:"genres" gorm:"type:json" sql:"type:longtext"`
     Homepage                    string              `json:"homepage"gorm:"size:255"`
-    Runtime                     uint64              `json:"runtime",gorm:"size:10"`
-    Status                      uint64              `json:"status",gorm:"size:10"`
-    Adult                       bool                `json:"adult",gorm:"default:false"`
-    ImdbId                      string              `json:"imdb_id",gorm:"size:255"`
-    ReleaseDate                 string              `json:"release_date",gorm:"size:255"`
-    ProductionCompanies         json.RawMessage     `json:"production_companies",gorm:"type:json",sql:"type:longtext"`
-    ProductionCountries         json.RawMessage     `json:"production_countries",gorm:"type:json",sql:"type:longtext"`
-    VoteAverage                 float64             `json:"vote_average",sql:"type:double"`
-    VoteCount                   uint64              `json:"vote_count",gorm:"size:10"`
-    Popularity                  float64             `json:"popularity",sql:"type:double"`
-    Budget                      uint64              `json:"budget",gorm:"size:10"`
-    Revenue                     uint64              `json:"revenue",gorm:"size:10"`
-    Backdrop                    string              `json:"backdrop",gorm:"size:255"`
-    Poster                      string              `json:"poster",gorm:"size:255"`
+    Runtime                     uint64              `json:"runtime" gorm:"size:10"`
+    Status                      uint64              `json:"status" gorm:"size:10"`
+    Adult                       bool                `json:"adult" gorm:"default:false"`
+    ImdbId                      string              `json:"imdb_id" gorm:"size:255"`
+    ReleaseDate                 string              `json:"release_date" gorm:"size:255"`
+    ProductionCompanies         json.RawMessage     `json:"production_companies" gorm:"type:json" sql:"type:longtext"`
+    ProductionCountries         json.RawMessage     `json:"production_countries" gorm:"type:json" sql:"type:longtext"`
+    VoteAverage                 float64             `json:"vote_average" sql:"type:double"`
+    VoteCount                   uint64              `json:"vote_count" gorm:"size:10"`
+    Popularity                  float64             `json:"popularity" sql:"type:double"`
+    Budget                      uint64              `json:"budget" gorm:"size:10"`
+    Revenue                     uint64              `json:"revenue" gorm:"size:10"`
+    Backdrop                    string              `json:"backdrop" gorm:"size:255"`
+    Poster                      string              `json:"poster" gorm:"size:255"`
     Timestamps
 }
 

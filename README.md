@@ -1,0 +1,5 @@
+[![Release](https://img.shields.io/github/release/plexmediamanager/micro-database.svg?style=for-the-badge)](https://github.com/plexmediamanager/micro-database/releases/latest)
+[![Travis](https://img.shields.io/travis/plexmediamanager/micro-database/master.svg?style=for-the-badge)](https://travis-ci.org/plexmediamanager/micro-database)
+[![Go Doc](https://img.shields.io/badge/godoc-reference-blue.svg?style=for-the-badge)](http://godoc.org/github.com/plexmediamanager/micro-database)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](/LICENSE.md)
+[![Codecov branch](https://img.shields.io/codecov/c/github/plexmediamanager/micro-database/master.svg?style=for-the-badge)](https://codecov.io/gh/plexmediamanager/micro-database)

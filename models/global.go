@@ -9,7 +9,7 @@ type Timestamps struct {
 
 type SoftDeleteTimestamps struct {
     Timestamps
-    DeletedAt           *time.Time           `json:"deleted_at",gorm:"default:null"`
+    DeletedAt           *time.Time           `json:"deleted_at" gorm:"default:null"`
 }
 
 func (timestamp *Timestamps) BeforeSave() error {
