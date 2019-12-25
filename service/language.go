@@ -55,8 +55,8 @@ func LanguageServiceFindOneByISO(client microClient.Client, code string) (*model
     return languageToStructure(service.FindOneByISO(context.TODO(), parameters))
 }
 
-func LanguageServiceFindManyByISO(client microClient.Client, code ...string) (*models.Language, error) {
+func LanguageServiceFindManyByISO(client microClient.Client, code ...string) ([]*models.Language, error) {
     service := GetLanguageService(client)
     parameters := &proto.DatabaseStrings { Values: code }
-    return languageToStructure(service.FindManyByISO(context.TODO(), parameters))
+    return languageArrayToStructure(service.FindManyByISO(context.TODO(), parameters))
 }

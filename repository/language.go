@@ -27,6 +27,11 @@ func (*LanguageRepository) ForceDelete(model *models.Language) (*models.Language
     return model, database.ForceDeleteRecord(model)
 }
 
+// Count total number of entries
+func (*LanguageRepository) Count() (uint64, error) {
+    return database.GetCount(&models.Language{})
+}
+
 // Get all languages from the database
 func (*LanguageRepository) FindAll() ([]*models.Language, error) {
     var languages []*models.Language

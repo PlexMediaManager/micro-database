@@ -32,7 +32,12 @@ func main() {
         log.Panic(err)
     }
 
-    err = database.Initialize().Connect()
+    databaseClient := database.Initialize(application)
+    err = databaseClient.Connect()
+    if err != nil {
+        log.Panic(err)
+    }
+    err = databaseClient.SynchronizeWithTMDB()
     if err != nil {
         log.Panic(err)
     }

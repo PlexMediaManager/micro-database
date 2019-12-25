@@ -16,7 +16,8 @@ require (
 	github.com/miekg/dns v1.1.24 // indirect
 	github.com/nats-io/jwt v0.3.2 // indirect
 	github.com/pelletier/go-toml v1.6.0 // indirect
-	github.com/plexmediamanager/service v0.0.0-20191223045751-bcca9d830be4
+	github.com/plexmediamanager/micro-tmdb v0.0.0-20191225231918-54390ceaaaa1
+	github.com/plexmediamanager/service v0.0.0-20191225081202-349589acb2b7
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	go.uber.org/atomic v1.5.1 // indirect
 	go.uber.org/multierr v1.4.0 // indirect

@@ -47,6 +47,30 @@ func GetAllRecords(output interface{}) error {
     return nil
 }
 
+// Count total number of records on the table
+func GetCount(model interface{}) (uint64, error) {
+    var count uint64
+    err := database.Model(model).Count(&count).Error
+    if err != nil {
+        return 0, errors.DatabaseCountError.ToErrorWithArguments(err, reflect.TypeOf(model), err)
+    }
+    return count, nil
+}
+
+// Check if record already exists in the database
+func RecordExists(model Model) (bool, error) {
+    var count uint64
+    if model == nil {
+        return false, errors.DatabaseModelNull.ToError(nil)
+    }
+
+    err := database.Table(model.TableName()).Where(model).Count(&count).Error
+    if err != nil {
+        return false, errors.DatabaseCountError.ToErrorWithArguments(err, reflect.TypeOf(model), err)
+    }
+    return count > 0, nil
+}
+
 // Create database record
 func CreateRecord(model Model) error {
     var err error

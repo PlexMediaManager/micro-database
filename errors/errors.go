@@ -48,7 +48,7 @@ var (
             ErrorType:      errors.TypeService,
             ErrorNumber:    2,
         },
-        Message:    "Unable to create model '%s' %s",
+        Message:    "Unable to create model '%v'",
     }
     DatabaseModelCreationWithPrimaryKey = errors.Error {
         Code:       errors.Code {
@@ -98,11 +98,19 @@ var (
         },
         Message:    "Failed to execute database query on '%s' with error: %v",
     }
+    DatabaseCountError = errors.Error {
+        Code:       errors.Code {
+            Service:        ServiceID,
+            ErrorType:      errors.TypeService,
+            ErrorNumber:    8,
+        },
+        Message:    "Failed to count rows on '%s' with error: %v",
+    }
     DatabaseUserNotFoundError = errors.Error {
         Code:       errors.Code {
             Service:        ServiceID,
             ErrorType:      errors.TypeService,
-            ErrorNumber:    99,
+            ErrorNumber:    9,
         },
         Message:    "Failed to fetch information for user with specified query",
     }

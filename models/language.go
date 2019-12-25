@@ -8,9 +8,9 @@ import (
 
 type Language struct {
     ID                          uint64              `json:"id" gorm:"primary_key"`
-    Iso                         string              `json:"iso_639_1" gorm:"size:50;not null"`
-    EnglishName                 string              `json:"english_name" gorm:"size:255;not null"`
-    Name                        string              `json:"name" gorm:"size:255;not null"`
+    Iso                         string              `json:"iso_639_1" gorm:"unique;not null" sql:"type:VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci"`
+    EnglishName                 string              `json:"english_name" gorm:"not null" sql:"type:VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci"`
+    Name                        string              `json:"name" gorm:"not null" sql:"type:VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci"`
     Timestamps
 }
 

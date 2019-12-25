@@ -586,8 +586,14 @@ github.com/pierrec/lz4 v2.2.6+incompatible/go.mod h1:pdkljMzZIN41W+lC3N2tnIh5sFi
 github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+github.com/plexmediamanager/micro-tmdb v0.0.0-20191225225603-795c6baeb2e4 h1:kbGBIA8I7NQ0LYZWR0jG3O9lw0LLPyxSz1FACRvynvI=
+github.com/plexmediamanager/micro-tmdb v0.0.0-20191225225603-795c6baeb2e4/go.mod h1:Mi+M5ra5hCIbtO9q90f7swMAPX9nhpsruB70sAbhnII=
+github.com/plexmediamanager/micro-tmdb v0.0.0-20191225231918-54390ceaaaa1 h1:G8fA7EKL4ZGpXwhPO4C5+qXiXMp8M1CP1txlTXnlAxg=
+github.com/plexmediamanager/micro-tmdb v0.0.0-20191225231918-54390ceaaaa1/go.mod h1:Mi+M5ra5hCIbtO9q90f7swMAPX9nhpsruB70sAbhnII=
 github.com/plexmediamanager/service v0.0.0-20191223045751-bcca9d830be4 h1:Km3H33SvFJUZDjLAywf1Ll+yow9UlSoM+aX4lFKWHf0=
 github.com/plexmediamanager/service v0.0.0-20191223045751-bcca9d830be4/go.mod h1:hsj61yu/2wvEM3wpQwaZiWSUpNG9+tj4ANS3TCDXbt8=
+github.com/plexmediamanager/service v0.0.0-20191225081202-349589acb2b7 h1:MJR3aggOFb7VC3rQqQo/NN523PObGVZ1cKpqGamwAtk=
+github.com/plexmediamanager/service v0.0.0-20191225081202-349589acb2b7/go.mod h1:hsj61yu/2wvEM3wpQwaZiWSUpNG9+tj4ANS3TCDXbt8=
 github.com/pmezard/go-difflib v0.0.0-20151028094244-d8ed2627bdf0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=

@@ -6,6 +6,7 @@ import (
     _ "github.com/jinzhu/gorm/dialects/mysql"
     "github.com/plexmediamanager/micro-database/errors"
     "github.com/plexmediamanager/micro-database/models"
+    "github.com/plexmediamanager/service"
     "github.com/plexmediamanager/service/helpers"
 )
 
@@ -18,11 +19,13 @@ type DatabaseClient struct {
 }
 
 var (
+    application         *service.Application
     database            *gorm.DB
 )
 
 // Initialize database client
-func Initialize() *DatabaseClient {
+func Initialize(app *service.Application) *DatabaseClient {
+    application = app
     return &DatabaseClient {
         databaseHost:       helpers.GetEnvironmentVariableAsString("DATABASE_HOST", "localhost"),
         databasePort:       uint64(helpers.GetEnvironmentVariableAsInteger("DATABASE_PORT", 3306)),
