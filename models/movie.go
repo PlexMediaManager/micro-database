@@ -3,6 +3,8 @@ package models
 import (
     "encoding/json"
     "github.com/jinzhu/gorm"
+    "github.com/plexmediamanager/micro-database/proto"
+    "time"
 )
 
 type Movie struct {
@@ -56,6 +58,68 @@ func (movie *Movie) BeforeUpdate(transaction *gorm.DB) error {
 // Action which will be executed before model entry is deleted from the database
 func (movie *Movie) BeforeDelete(transaction *gorm.DB) error {
     return nil
+}
+
+// Convert model to proto
+func (movie *Movie) ToProto() *proto.Movie {
+    return &proto.Movie {
+        Id:                     movie.ID,
+        Title:                  movie.Title,
+        OriginalTitle:          movie.OriginalTitle,
+        LocalTitle:             movie.LocalTitle,
+        OriginalLanguage:       movie.OriginalLanguage,
+        Languages:              movie.Languages,
+        Overview:               movie.Overview,
+        Tagline:                movie.Tagline,
+        Genres:                 movie.Genres,
+        Homepage:               movie.Homepage,
+        Runtime:                movie.Runtime,
+        Status:                 movie.Status,
+        Adult:                  movie.Adult,
+        ImdbId:                 movie.ImdbId,
+        ReleaseDate:            movie.ReleaseDate,
+        ProductionCompanies:    movie.ProductionCompanies,
+        ProductionCountries:    movie.ProductionCountries,
+        VoteAverage:            movie.VoteAverage,
+        VoteCount:              movie.VoteCount,
+        Popularity:             movie.Popularity,
+        Budget:                 movie.Budget,
+        Revenue:                movie.Revenue,
+        Backdrop:               movie.Backdrop,
+        Poster:                 movie.Poster,
+        CreatedAt:              movie.CreatedAt.Unix(),
+        UpdatedAt:              movie.UpdatedAt.Unix(),
+    }
+}
+
+// Extract model from proto
+func (movie *Movie) FromProto(protoMovie *proto.Movie) {
+    movie.ID                        =   protoMovie.Id
+    movie.Title                     =   protoMovie.Title
+    movie.OriginalTitle             =   protoMovie.OriginalTitle
+    movie.LocalTitle                =   protoMovie.LocalTitle
+    movie.OriginalLanguage          =   protoMovie.OriginalLanguage
+    movie.Languages                 =   protoMovie.Languages
+    movie.Overview                  =   protoMovie.Overview
+    movie.Tagline                   =   protoMovie.Tagline
+    movie.Genres                    =   protoMovie.Genres
+    movie.Homepage                  =   protoMovie.Homepage
+    movie.Runtime                   =   protoMovie.Runtime
+    movie.Status                    =   protoMovie.Status
+    movie.Adult                     =   protoMovie.Adult
+    movie.ImdbId                    =   protoMovie.ImdbId
+    movie.ReleaseDate               =   protoMovie.ReleaseDate
+    movie.ProductionCompanies       =   protoMovie.ProductionCompanies
+    movie.ProductionCountries       =   protoMovie.ProductionCountries
+    movie.VoteAverage               =   protoMovie.VoteAverage
+    movie.VoteCount                 =   protoMovie.VoteCount
+    movie.Popularity                =   protoMovie.Popularity
+    movie.Budget                    =   protoMovie.Budget
+    movie.Revenue                   =   protoMovie.Revenue
+    movie.Backdrop                  =   protoMovie.Backdrop
+    movie.Poster                    =   protoMovie.Poster
+    movie.CreatedAt                 =   time.Unix(protoMovie.CreatedAt, 0).UTC()
+    movie.UpdatedAt                 =   time.Unix(protoMovie.UpdatedAt, 0).UTC()
 }
 
 const (
