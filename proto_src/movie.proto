@@ -1,0 +1,17 @@
+syntax = "proto3";
+import "database.proto";
+package proto;
+
+service MovieService {
+//    rpc Create(Movie) returns (DatabaseResponse) {}
+//    rpc CreateOrUpdate(Movie) returns (DatabaseResponse) {}
+//    rpc Update(Movie) returns (DatabaseResponse) {}
+//    rpc SoftDelete(Movie) returns (DatabaseResponse) {}
+//    rpc ForceDelete(Movie) returns (DatabaseResponse) {}
+
+    rpc FindDownloaded(DatabaseEmpty) returns (DatabaseResponse) {}
+}
+
+message Movie {
+
+}

@@ -1,8 +1,8 @@
 package database
 
 import (
-    "github.com/plexmediamanager/micro-database/errors"
     "github.com/jinzhu/gorm"
+    "github.com/plexmediamanager/micro-database/errors"
     "reflect"
 )
 
@@ -26,7 +26,12 @@ func GetSingleRecord(output interface{}, query interface{}) error {
 
 // Get multiple records from the database
 func GetMultipleRecords(output interface{}, query interface{}, parameters interface{}) error {
-    err := database.Where(query, parameters).Find(output).Error
+    var err error
+    if parameters != nil {
+        err = database.Where(query, parameters).Find(output).Error
+    } else {
+        err = database.Where(query).Find(output).Error
+    }
     if err != nil {
         return errors.DatabaseUndefinedError.ToErrorWithArguments(err, reflect.TypeOf(output), err)
     }

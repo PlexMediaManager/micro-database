@@ -46,6 +46,10 @@ func main() {
 func registerResolvers(application *service.Application) {
     server := application.Service().Server()
 
+    if err := proto.RegisterMovieServiceHandler(server, new(resolver.MovieService)); err != nil {
+        log.Panic(err)
+    }
+
     if err := proto.RegisterUserServiceHandler(server, new(resolver.UserService)); err != nil {
         log.Panic(err)
     }
