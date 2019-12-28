@@ -9,7 +9,10 @@ type PermissionRepository struct {}
 
 // Create new permission
 func (*PermissionRepository) Create(model *models.Permission) (*models.Permission, error) {
-    return model, database.CreateRecord(model)
+    return model, database.CreateRecord(database.CreationParameters {
+        Model:        model,
+        CreateWithID: false,
+    })
 }
 
 // Update existing permission
@@ -45,13 +48,21 @@ func (repository *PermissionRepository) FindOneByName(name string) (*models.Perm
 // Find single permission
 func (*PermissionRepository) findOne(query interface{}) (*models.Permission, error) {
     record := &models.Permission{}
-    err := database.GetSingleRecord(record, query)
+    err := database.GetRecord(&database.DatabaseQuery{
+        Output:     record,
+        Query:      query,
+    })
     return record, err
 }
 
 // Find multiple permissions
 func (*PermissionRepository) findMany(query interface{}, parameters interface{}) ([]*models.Permission, error) {
     var records []*models.Permission
-    err := database.GetMultipleRecords(&records, query, parameters)
+    err := database.GetRecord(&database.DatabaseQuery{
+        Output:     &records,
+        Query:      query,
+        Parameters: parameters,
+        Multiple:   true,
+    })
     return records, err
 }

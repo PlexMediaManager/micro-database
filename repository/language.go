@@ -9,7 +9,10 @@ type LanguageRepository struct {}
 
 // Create new language
 func (*LanguageRepository) Create(model *models.Language) (*models.Language, error) {
-    return model, database.CreateRecord(model)
+    return model, database.CreateRecord(database.CreationParameters {
+        Model:        model,
+        CreateWithID: false,
+    })
 }
 
 // Update existing language
@@ -35,7 +38,10 @@ func (*LanguageRepository) Count() (uint64, error) {
 // Get all languages from the database
 func (*LanguageRepository) FindAll() ([]*models.Language, error) {
     var languages []*models.Language
-    return languages, database.GetAllRecords(&languages)
+    return languages, database.GetRecord(&database.DatabaseQuery{
+        Output:     &languages,
+        All:        true,
+    })
 }
 
 // Find one language by ISO code
@@ -51,13 +57,21 @@ func (repository *LanguageRepository) FindManyByISO(code ...string) ([]*models.L
 // Find single language
 func (*LanguageRepository) findOne(query interface{}) (*models.Language, error) {
     language := &models.Language{}
-    err := database.GetSingleRecord(language, query)
+    err := database.GetRecord(&database.DatabaseQuery{
+        Output:     language,
+        Query:      query,
+    })
     return language, err
 }
 
 // Find multiple languages
 func (*LanguageRepository) findMany(query interface{}, parameters interface{}) ([]*models.Language, error) {
     var languages []*models.Language
-    err := database.GetMultipleRecords(&languages, query, parameters)
+    err := database.GetRecord(&database.DatabaseQuery{
+        Output:     &languages,
+        Query:      query,
+        Parameters: parameters,
+        Multiple:   true,
+    })
     return languages, err
 }

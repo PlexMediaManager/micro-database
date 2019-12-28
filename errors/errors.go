@@ -48,7 +48,7 @@ var (
             ErrorType:      errors.TypeService,
             ErrorNumber:    2,
         },
-        Message:    "Unable to create model '%v'",
+        Message:    "Unable to create model '%v': %v",
     }
     DatabaseModelCreationWithPrimaryKey = errors.Error {
         Code:       errors.Code {

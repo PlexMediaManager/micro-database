@@ -1,13 +1,18 @@
 package database
 
 import (
+    format "fmt"
     "github.com/plexmediamanager/micro-database/models"
     tmdbService "github.com/plexmediamanager/micro-tmdb/service"
 )
 
 // Synchronize database with TMDB sources
 func (client *DatabaseClient) SynchronizeWithTMDB() error {
-    err := tmdbSynchronizeLanguages()
+    var err error
+    tmdbError := tmdbSynchronizeLanguages()
+    if tmdbError != nil {
+        format.Println("TMDB Service was not ready when we started database, not a big problem")
+    }
 
     return err
 }
@@ -28,7 +33,10 @@ func tmdbSynchronizeLanguages() error {
             return err
         }
         if !exists {
-            err = CreateRecord(model)
+            err = CreateRecord(CreationParameters {
+                Model:        model,
+                CreateWithID: false,
+            })
             if err != nil {
                 return err
             }

@@ -8,10 +8,10 @@ import (
 )
 
 type Movie struct {
-    ID                          uint64              `json:"id" gorm:"primary_key"`
+    ID                          uint64              `json:"id" gorm:"size:10;not null;not_auto_increment"`
     Title                       string              `json:"title" gorm:"size:255;not null"`
     OriginalTitle               string              `json:"original_title" gorm:"size:255;not null"`
-    LocalTitle                  string              `json:"local_title" gorm:"size:255"`
+    LocalTitle                  string             `json:"local_title" gorm:"size:255"`
     OriginalLanguage            string              `json:"original_language" gorm:"size:255"`
     Languages                   json.RawMessage     `json:"languages" gorm:"type:json" sql:"type:longtext"`
     Overview                    string              `json:"overview" sql:"type:longtext"`

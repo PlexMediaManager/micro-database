@@ -9,7 +9,10 @@ type UserRepository struct {}
 
 // Create new user
 func (*UserRepository) Create(model *models.User) (*models.User, error) {
-    return model, database.CreateRecord(model)
+    return model, database.CreateRecord(database.CreationParameters {
+        Model:        model,
+        CreateWithID: false,
+    })
 }
 
 // Update existing user
@@ -60,13 +63,21 @@ func (repository *UserRepository) FindManyByEmail(email ...string) ([]*models.Us
 // Find single user
 func (*UserRepository) findOne(query interface{}) (*models.User, error) {
     user := &models.User{}
-    err := database.GetSingleRecord(user, query)
+    err := database.GetRecord(&database.DatabaseQuery{
+        Output:     user,
+        Query:      query,
+    })
     return user, err
 }
 
 // Find multiple users
 func (*UserRepository) findMany(query interface{}, parameters interface{}) ([]*models.User, error) {
     var users []*models.User
-    err := database.GetMultipleRecords(&users, query, parameters)
+    err := database.GetRecord(&database.DatabaseQuery{
+        Output:     &users,
+        Query:      query,
+        Parameters: parameters,
+        Multiple:   true,
+    })
     return users, err
 }

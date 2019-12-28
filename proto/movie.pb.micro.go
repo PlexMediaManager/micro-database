@@ -39,6 +39,7 @@ type MovieService interface {
 	SoftDelete(ctx context.Context, in *Movie, opts ...client.CallOption) (*DatabaseResponse, error)
 	ForceDelete(ctx context.Context, in *Movie, opts ...client.CallOption) (*DatabaseResponse, error)
 	FindAll(ctx context.Context, in *DatabaseEmpty, opts ...client.CallOption) (*DatabaseResponse, error)
+	FindOnlyIDs(ctx context.Context, in *DatabaseEmpty, opts ...client.CallOption) (*DatabaseResponse, error)
 	FindDownloaded(ctx context.Context, in *DatabaseEmpty, opts ...client.CallOption) (*DatabaseResponse, error)
 	FindOneByID(ctx context.Context, in *DatabaseID, opts ...client.CallOption) (*DatabaseResponse, error)
 	FindManyByID(ctx context.Context, in *DatabaseIDs, opts ...client.CallOption) (*DatabaseResponse, error)
@@ -110,6 +111,16 @@ func (c *movieService) ForceDelete(ctx context.Context, in *Movie, opts ...clien
 
 func (c *movieService) FindAll(ctx context.Context, in *DatabaseEmpty, opts ...client.CallOption) (*DatabaseResponse, error) {
 	req := c.c.NewRequest(c.name, "MovieService.FindAll", in)
+	out := new(DatabaseResponse)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *movieService) FindOnlyIDs(ctx context.Context, in *DatabaseEmpty, opts ...client.CallOption) (*DatabaseResponse, error) {
+	req := c.c.NewRequest(c.name, "MovieService.FindOnlyIDs", in)
 	out := new(DatabaseResponse)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -216,6 +227,7 @@ type MovieServiceHandler interface {
 	SoftDelete(context.Context, *Movie, *DatabaseResponse) error
 	ForceDelete(context.Context, *Movie, *DatabaseResponse) error
 	FindAll(context.Context, *DatabaseEmpty, *DatabaseResponse) error
+	FindOnlyIDs(context.Context, *DatabaseEmpty, *DatabaseResponse) error
 	FindDownloaded(context.Context, *DatabaseEmpty, *DatabaseResponse) error
 	FindOneByID(context.Context, *DatabaseID, *DatabaseResponse) error
 	FindManyByID(context.Context, *DatabaseIDs, *DatabaseResponse) error
@@ -234,6 +246,7 @@ func RegisterMovieServiceHandler(s server.Server, hdlr MovieServiceHandler, opts
 		SoftDelete(ctx context.Context, in *Movie, out *DatabaseResponse) error
 		ForceDelete(ctx context.Context, in *Movie, out *DatabaseResponse) error
 		FindAll(ctx context.Context, in *DatabaseEmpty, out *DatabaseResponse) error
+		FindOnlyIDs(ctx context.Context, in *DatabaseEmpty, out *DatabaseResponse) error
 		FindDownloaded(ctx context.Context, in *DatabaseEmpty, out *DatabaseResponse) error
 		FindOneByID(ctx context.Context, in *DatabaseID, out *DatabaseResponse) error
 		FindManyByID(ctx context.Context, in *DatabaseIDs, out *DatabaseResponse) error
@@ -273,6 +286,10 @@ func (h *movieServiceHandler) ForceDelete(ctx context.Context, in *Movie, out *D
 
 func (h *movieServiceHandler) FindAll(ctx context.Context, in *DatabaseEmpty, out *DatabaseResponse) error {
 	return h.MovieServiceHandler.FindAll(ctx, in, out)
+}
+
+func (h *movieServiceHandler) FindOnlyIDs(ctx context.Context, in *DatabaseEmpty, out *DatabaseResponse) error {
+	return h.MovieServiceHandler.FindOnlyIDs(ctx, in, out)
 }
 
 func (h *movieServiceHandler) FindDownloaded(ctx context.Context, in *DatabaseEmpty, out *DatabaseResponse) error {

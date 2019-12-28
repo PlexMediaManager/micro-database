@@ -1,6 +1,7 @@
 package database
 
 import (
+    format "fmt"
     "github.com/jinzhu/gorm"
     "github.com/plexmediamanager/micro-database/errors"
     "reflect"
@@ -15,34 +16,78 @@ type Model interface {
     UpdatedFields(updateID bool, updatedFields ...string)   map[string]interface{}
 }
 
-// Get single record from the database
-func GetSingleRecord(output interface{}, query interface{}) error {
-    err := database.Where(query).First(output).Error
-    if err != nil {
-        return errors.DatabaseModelNotFound.ToErrorWithArguments(err, output.(Model).TableName())
-    }
-    return nil
+type DatabaseOrder struct {
+    Column                  string
+    Order                   string
 }
 
-// Get multiple records from the database
-func GetMultipleRecords(output interface{}, query interface{}, parameters interface{}) error {
+type DatabaseQuery struct {
+    Output                  interface{}
+    Query                   interface{}
+    Parameters              interface{}
+    All                     bool
+    Multiple                bool
+    Count                   bool
+    Counted                 int64
+    Order                   DatabaseOrder
+    Limit                   int64
+    Offset                  int64
+    Columns                 []string
+}
+
+// Get record from the database
+func GetRecord(query *DatabaseQuery) error {
     var err error
-    if parameters != nil {
-        err = database.Where(query, parameters).Find(output).Error
-    } else {
-        err = database.Where(query).Find(output).Error
-    }
-    if err != nil {
-        return errors.DatabaseUndefinedError.ToErrorWithArguments(err, reflect.TypeOf(output), err)
-    }
-    return nil
-}
+    var builder *gorm.DB
 
-// Get all records from the database
-func GetAllRecords(output interface{}) error {
-    err := database.Find(output).Error
+    if query.All {
+        if query.Columns != nil && len(query.Columns) > 0 {
+            err = database.Select(query.Columns).Find(query.Output).Error
+        } else {
+            err = database.Find(query.Output).Error
+        }
+        if err != nil {
+            return errors.DatabaseUndefinedError.ToErrorWithArguments(err, reflect.TypeOf(query.Output), err)
+        }
+        return nil
+    }
+
+    if query.Parameters == nil {
+        builder = database.Where(query.Query)
+    } else {
+        builder = database.Where(query.Query, query.Parameters)
+    }
+
+    if query.Order.Column != "" {
+        builder = builder.Order(format.Sprintf("%s %s", query.Order.Column, query.Order.Order))
+    }
+
+    if query.Limit > 0 {
+        builder = builder.Limit(query.Limit)
+    }
+
+    if query.Offset > 0 {
+        builder = builder.Offset(query.Offset)
+    }
+
+    if query.Columns != nil && len(query.Columns) > 0 {
+        builder = builder.Select(query.Columns)
+    }
+
+    if query.Multiple {
+        builder = builder.Find(query.Output)
+    } else {
+        builder = builder.First(query.Output)
+    }
+
+    if query.Count {
+        builder = builder.Count(&query.Counted)
+    }
+
+    err = builder.Error
+
     if err != nil {
-        return errors.DatabaseUndefinedError.ToErrorWithArguments(err, reflect.TypeOf(output), err)
+        return errors.DatabaseUndefinedError.ToErrorWithArguments(err, reflect.TypeOf(query.Output), err)
     }
     return nil
 }
@@ -71,27 +116,34 @@ func RecordExists(model Model) (bool, error) {
     return count > 0, nil
 }
 
+type CreationParameters struct {
+    Model               Model
+    CreateWithID        bool
+}
+
 // Create database record
-func CreateRecord(model Model) error {
+func CreateRecord(parameters CreationParameters) error {
     var err error
-    if model == nil {
+    if parameters.Model == nil {
         return errors.DatabaseModelNull.ToError(nil)
     }
+
     transaction := database.Begin()
-    if transaction.NewRecord(model) {
-        if creationError := model.BeforeCreate(transaction); creationError == nil {
-            err = transaction.Create(model).Error
-            transaction.Commit()
-        } else {
+    if transaction.NewRecord(parameters.Model) || parameters.CreateWithID {
+        if beforeCreateError := parameters.Model.BeforeCreate(transaction); beforeCreateError != nil {
             transaction.Rollback()
-            return errors.DatabaseModelCreationError.ToErrorWithArguments(creationError, model)
+            return errors.DatabaseModelCreationError.ToErrorWithArguments(beforeCreateError, parameters.Model)
+        } else {
+            err = transaction.Create(parameters.Model).Error
+            transaction.Commit()
         }
     } else {
         transaction.Rollback()
-        return errors.DatabaseModelCreationWithPrimaryKey.ToErrorWithArguments(nil, model.TableName())
+        return errors.DatabaseModelCreationWithPrimaryKey.ToErrorWithArguments(nil, parameters.Model.TableName())
     }
+
     if err != nil {
-        return errors.DatabaseModelCreationError.ToErrorWithArguments(err, model)
+        return errors.DatabaseModelCreationError.ToErrorWithArguments(err, parameters.Model.TableName(), err)
     }
     return nil
 }

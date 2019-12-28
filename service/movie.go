@@ -49,6 +49,14 @@ func MovieServiceFindAll(client microClient.Client) ([]*models.Movie, error) {
     return movieArrayToStructure(service.FindAll(context.TODO(), parameters))
 }
 
+func MovieServiceFindOnlyIDs(client microClient.Client) ([]uint64, error) {
+    service := GetMovieService(client)
+    parameters := &proto.DatabaseEmpty {}
+    var data []uint64
+    result, err := service.FindOnlyIDs(context.TODO(), parameters)
+    return data, protoToStructure(&data, result, err)
+}
+
 func MovieServiceFindDownloaded (client microClient.Client) ([]*models.Movie, error) {
     service := GetMovieService(client)
     parameters := &proto.DatabaseEmpty {}

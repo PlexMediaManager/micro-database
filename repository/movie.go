@@ -9,7 +9,10 @@ type MovieRepository struct {}
 
 // Create new movie
 func (*MovieRepository) Create(model *models.Movie) (*models.Movie, error) {
-    return model, database.CreateRecord(model)
+    return model, database.CreateRecord(database.CreationParameters {
+        Model:        model,
+        CreateWithID: true,
+    })
 }
 
 // Update existing movie
@@ -30,7 +33,28 @@ func (*MovieRepository) ForceDelete(model *models.Movie) (*models.Movie, error) 
 // Get all movies from the database
 func (*MovieRepository) FindAll() ([]*models.Movie, error) {
     var movies []*models.Movie
-    return movies, database.GetAllRecords(&movies)
+    return movies, database.GetRecord(&database.DatabaseQuery{
+        Output:     &movies,
+        All:        true,
+    })
+}
+
+// Find only IDs
+func (*MovieRepository) FindOnlyIDs() ([]uint64, error) {
+    ids := make([]uint64, 0)
+    var movies []*models.Movie
+    err := database.GetRecord(&database.DatabaseQuery{
+        Output:     &movies,
+        All:        true,
+        Columns:    []string { "id" },
+    })
+    if err != nil {
+        return ids, err
+    }
+    for _, movie := range movies {
+        ids = append(ids, movie.ID)
+    }
+    return ids, nil
 }
 
 // Get list of all downloaded movies
@@ -81,13 +105,21 @@ func (repository *MovieRepository) FindManyByLocalTitle(title ...string) ([]*mod
 // Find single movie
 func (*MovieRepository) findOne(query interface{}) (*models.Movie, error) {
     movie := &models.Movie{}
-    err := database.GetSingleRecord(movie, query)
+    err := database.GetRecord(&database.DatabaseQuery{
+        Output:     movie,
+        Query:      query,
+    })
     return movie, err
 }
 
 // Find multiple movies
 func (*MovieRepository) findMany(query interface{}, parameters interface{}) ([]*models.Movie, error) {
     var movies []*models.Movie
-    err := database.GetMultipleRecords(&movies, query, parameters)
+    err := database.GetRecord(&database.DatabaseQuery{
+        Output:     &movies,
+        Query:      query,
+        Parameters: parameters,
+        Multiple:   true,
+    })
     return movies, err
 }

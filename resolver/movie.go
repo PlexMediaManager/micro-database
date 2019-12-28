@@ -43,6 +43,11 @@ func (service MovieService) FindAll(_ context.Context, parameters *proto.Databas
     return structureToBytesWithError(result, err, response)
 }
 
+func (service MovieService) FindOnlyIDs(_ context.Context, parameters *proto.DatabaseEmpty, response *proto.DatabaseResponse) error {
+    result, err := repository.Movie.FindOnlyIDs()
+    return structureToBytesWithError(result, err, response)
+}
+
 func (service MovieService) FindDownloaded (_ context.Context, parameters *proto.DatabaseEmpty, response *proto.DatabaseResponse) error {
     result, err := repository.Movie.FindDownloaded()
     return structureToBytesWithError(result, err, response)

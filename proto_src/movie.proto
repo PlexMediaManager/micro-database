@@ -9,6 +9,7 @@ service MovieService {
     rpc ForceDelete(Movie) returns (DatabaseResponse) {}
 
     rpc FindAll(DatabaseEmpty) returns (DatabaseResponse) {}
+    rpc FindOnlyIDs(DatabaseEmpty) returns (DatabaseResponse) {}
     rpc FindDownloaded(DatabaseEmpty) returns (DatabaseResponse) {}
     rpc FindOneByID(DatabaseID) returns (DatabaseResponse) {}
     rpc FindManyByID(DatabaseIDs) returns (DatabaseResponse) {}
